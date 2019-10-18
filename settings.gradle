@@ -1,1 +1,2 @@
 include ':bug1'
+include ':bug2'

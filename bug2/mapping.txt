@@ -1,0 +1,2 @@
+com.vdian.android.lib.vdplayer.player.IMediaPlayer -> com.vdian.android.lib.vdplayer.player.IMediaPlayer:
+com.vdian.android.lib.vdplayer.player.IMediaPlayer$OnBufferingUpdateListener -> com.vdian.android.lib.vdplayer.player.IMediaPlayer$OnBufferingUpdateListener:
