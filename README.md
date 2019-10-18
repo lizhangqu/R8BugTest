@@ -3,6 +3,7 @@
   - Android Gradle Plugin 3.5.1
   - Gradle 5.6.2
   - R8 is enabled and minifyEnabled=true 
+  - applymapping is configured in proguard rule
 
 ### Bug1
 
