@@ -113,3 +113,46 @@ com.vdian.android.lib.vdplayer.player.IMediaPlayer$OnBufferingUpdateListener -> 
 ```
 
 Now run ./gradlew :bug2:assembleRelease
+
+
+#### Bad result
+
+The constructor code in class `com.vdian.flutter.vd_video_player.VideoPlayer` which is in video_plugin.jar file
+
+```
+import com.vdian.android.lib.vdplayer.player.IMediaPlayer;
+import com.vdian.android.lib.vdplayer.player.VDMediaDataSource;
+import com.vdian.android.lib.vdplayer.player.IMediaPlayer.OnBufferingUpdateListener;
+import com.vdian.android.lib.vdplayer.player.IMediaPlayer.OnCompletionListener;
+import com.vdian.android.lib.vdplayer.player.IMediaPlayer.OnErrorListener;
+import com.vdian.android.lib.vdplayer.player.IMediaPlayer.OnPreparedListener;
+
+public class VideoPlayer {
+    private final IMediaPlayer mediaPlayer;
+    private final EventChannel eventChannel;
+    private final SurfaceTextureEntry textureEntry;
+    private Surface surface;
+    private boolean isInitialized = false;
+    private QueuingEventSink eventSink = new QueuingEventSink();
+
+    public VideoPlayer(Context context, IMediaPlayer mediaPlayer, EventChannel eventChannel, SurfaceTextureEntry textureEntry, String dataSource, Result result) {
+        this.eventChannel = eventChannel;
+        this.mediaPlayer = mediaPlayer;
+        this.textureEntry = textureEntry;
+        Uri uri = Uri.parse(dataSource);
+
+        try {
+            mediaPlayer.setDataSource(context, new VDMediaDataSource(uri));
+        } catch (IOException var9) {
+            var9.printStackTrace();
+        }
+
+        this.setupVideoPlayer(eventChannel, result);
+    }
+}
+```
+
+`com.vdian.flutter.vd_video_player.VideoPlayer` reference a class `com.vdian.android.lib.vdplayer.player.IMediaPlayer` which is in the play_sdk.jar in compileOnly classpath.
+
+Actually `com.vdian.android.lib.vdplayer.player.IMediaPlayer` should not be obfuscated because it's just be provided and the mapping.txt not configure it's mapping rule.
+
