@@ -79,3 +79,37 @@ The smali code
 
 The \<clinit\> will be obfuscated when there is an applymapping rule in the proguard rule, but it should not be obfuscated actually.
 Excetion (Method(Lcom/sample/r8bugtest/TestClinit;.a) is marked constructor, but doesn't match name) will be thrown in runtime.
+
+
+
+### Bug2
+
+#### Reproduce code
+
+There are two compiled jars in runtime classpath in bug2/runtime dir called flutter.jar and video_plugin.jar.
+And There is a compiled jar in compileOnly classpath in bug2/compileOnly dir called palyer_sdk.jar
+
+The gradle dependency is
+
+```
+dependencies {
+    implementation fileTree(dir: 'runtime', include: ['*.jar'])
+    compileOnly fileTree(dir: 'compileOnly', include: ['*.jar'])
+}
+```
+
+The proguard-rules.pro file content
+
+```
+-keep class io.flutter.** {*;}
+-keep class com.vdian.flutter.vd_video_player.VdVideoPlayerPlugin {*;}
+-applymapping mapping.txt
+```
+
+The mapping.txt file content
+```
+com.vdian.android.lib.vdplayer.player.IMediaPlayer -> com.vdian.android.lib.vdplayer.player.IMediaPlayer:
+com.vdian.android.lib.vdplayer.player.IMediaPlayer$OnBufferingUpdateListener -> com.vdian.android.lib.vdplayer.player.IMediaPlayer$OnBufferingUpdateListener:
+```
+
+Now run ./gradlew :bug2:assembleRelease
