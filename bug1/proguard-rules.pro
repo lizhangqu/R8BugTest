@@ -1,0 +1,2 @@
+-keep class com.sample.r8bugtest.TestClinit {*;}
+-applymapping mapping.txt
