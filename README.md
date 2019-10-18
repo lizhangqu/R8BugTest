@@ -76,5 +76,5 @@ The smali code
 
 ```
 
-The <clinit> will be obfuscated when there is an applymapping rule in the proguard rule, but it should not be obfuscated actually.
+The \<clinit\> will be obfuscated when there is an applymapping rule in the proguard rule, but it should not be obfuscated actually.
 Excetion (Method(Lcom/sample/r8bugtest/TestClinit;.a) is marked constructor, but doesn't match name) will be thrown in runtime.
